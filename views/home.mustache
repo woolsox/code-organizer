@@ -4,19 +4,25 @@
 <head>
  <meta charset="utf-8" />
  <title>CodeSnips</title>
- <link rel="stylesheet" type="text/css" href="css/main.css" />
- <link rel="stylesheet" type="text/css" href="/css/main.css" />
+ <link rel="stylesheet" type="text/css" href="static/main.css" />
+ <link rel="stylesheet" type="text/css" href="/static/main.css" />
 </head>
 
 <body>
  <h1>Code Snippets:</h1>
+ {{#user}}
+ <h2>Welcome {{username}}!</h2>
+ {{/user}}
+ <a href='/login'>Login to your Code Snippets account</a>
+ <a href='/register'>Register with Code Snippets</a>
  <a href='/add'>Add a code snippet:</a>
- <div class="">
+ <div class="codeContainer">
   {{#code}}
    <div class="codeSnippets">
     <a href="{{_id}}">
      <h2>{{title}}</h2>
-     <h3>{{body}}</h3>
+     <h3>{{author}}</h3>
+     <code>{{body}}</code>
      <h4>{{notes}}</h4>
      <h5>{{language}}</h5>
      <h6>{{tags}}</h6>

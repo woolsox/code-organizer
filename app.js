@@ -10,12 +10,15 @@ const fs = require('fs'),
  mongoose = require('mongoose'),
  expressValidator = require('express-validator'),
  port = 3000,
- models = require('./models/code'),
- Code = models.Code;
+ codeOrganizer = 'mongodb://localhost:27017/codeOrganizer'
+ codeModels = require('./models/code'),
+ userModels = require('./models/user'),
+ User = userModels.User,
+ Code = codeModels.Code;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/codeOrganizer');
+mongoose.connect(codeOrganizer);
 mongoose.Promise = require('bluebird');
 
 app.engine('mustache', mustacheExpress());
@@ -25,6 +28,55 @@ app.use('/static', express.static('static'));
 app.use(bodyParser.urlencoded({
  extended: true
 }));
+
+var PassportLocalStrategy = require('passport-local');
+
+var authStrategy = new PassportLocalStrategy({
+ usernameField: 'username',
+ passwordField: 'password'
+}, function(username, password, done) {
+ User.authenticate(username, password, function(error, user) {
+  done(error, user, error ? {
+   message: error.message
+  } : null);
+ });
+});
+
+var authSerializer = function(user, done) {
+ done(null, user.id);
+};
+
+var authDeserializer = function(id, done) {
+ User.findById(id, function(error, user) {
+  done(error, user);
+ });
+};
+
+passport.use(authStrategy);
+passport.serializeUser(authSerializer);
+passport.deserializeUser(authDeserializer);
+
+app.use(require('connect-flash')());
+app.use(passport.initialize());
+
+app.get('/login', function(req, res) {
+ res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+ successRedirect: '/',
+ failureRedirect: '/login'
+}));
+
+app.get('/register', function(req, res) {
+ res.render('register');
+});
+
+app.post('/register', function(req, res) {
+ User.create(req.body).then(function(user) {
+  res.redirect('/');
+ });
+});
 
 app.get('/add', function(req, res) {
  res.render('add');
@@ -74,13 +126,12 @@ app.post('/:id', function(req, res) {
 });
 
 app.get('/', function(req, res) {
- Code.find().then(function(code) {
+ Code.find().then(function(code, user) {
   res.render('home', {
    code: code
   });
  });
 });
-
 
 app.listen(port, function() {
  console.log('Code Organizer running...')

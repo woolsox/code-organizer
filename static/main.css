@@ -1,0 +1,10 @@
+.codeContainer {
+ display: flex;
+ flex-direction: row;
+}
+
+.codeSnippets {
+ border: 1px solid black;
+ padding: 10px 10px;
+ margin: 5px 5px;
+}
