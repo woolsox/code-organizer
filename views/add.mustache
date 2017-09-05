@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+ <meta charset="utf-8" />
+ <title>CodeSnips</title>
+ <link rel="stylesheet" type="text/css" href="css/main.css" />
+ <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body>
+ <a href="/">Home</a>
+ <h1>Add a snippet:</h1>
+ <form action="/add" method="POST">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" placeholder="Name this snippet" required />
+  <label for="body">Body:</label>
+  <textarea type="text" id="body" name="body" placeholder="Code goes here" required></textarea>
+  <label for="notes">Notes:</label>
+  <input type="text" id="notes" name="notes" placeholder="Notes" />
+  <label for="language">Language:</label>
+  <input type="text" id="language" name="language" placeholder="Language" />
+  <label for="tags">Tags:</label>
+  <input type="text" id="tags" name="tags" placeholder="Tags" />
+  <button type="submit">Add to collection</button>
+ </form>
+</body>
+
+</html>

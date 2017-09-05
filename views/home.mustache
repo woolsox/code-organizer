@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+ <meta charset="utf-8" />
+ <title>CodeSnips</title>
+ <link rel="stylesheet" type="text/css" href="css/main.css" />
+ <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body>
+ <h1>Code Snippets:</h1>
+ <a href='/add'>Add a code snippet:</a>
+ <div class="">
+  {{#code}}
+   <div class="codeSnippets">
+    <a href="{{_id}}">
+     <h2>{{title}}</h2>
+     <h3>{{body}}</h3>
+     <h4>{{notes}}</h4>
+     <h5>{{language}}</h5>
+     <h6>{{tags}}</h6>
+    </a>
+   </div>
+  {{/code}}
+ </div>
+</body>
+
+</html>
