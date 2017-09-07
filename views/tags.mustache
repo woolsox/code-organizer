@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+ <meta charset="utf-8" />
+ <title>CodeSnips</title>
+ <link rel="stylesheet" type="text/css" href="static/main.css" />
+ <link rel="stylesheet" type="text/css" href="/static/main.css" />
+</head>
+
+<body>
+ {{#code.0}}
+ <h1>Code Snippets by tag: {{tags}}</h1>
+ {{/code.0}}
+ <a href="/">Back to snippets</a>
+ <div class="codeContainer">
+    {{#code}}
+     <div class="codeSnippets">
+       <a href="{{_id}}"><h2>Title: {{title}}</h2></a>
+       <a href="/author/{{author}}"><h3>By: {{author}}</h3></a>
+       <code>Code: {{body}}</code>
+       <h4>Notes: {{notes}}</h4>
+       <a href="/language/{{language}}"><h5>Language: {{language}}</h5></a>
+       <a href="/tags/{{tags}}"><h6>Tags: {{tags}}</h6></a>
+     </div>
+    {{/code}}
+ </div>
+</body>
+
+</html>

@@ -43,6 +43,7 @@ var authStrategy = new PassportLocalStrategy({
 });
 
 var authSerializer = function(req, user, done) {
+ req.session.user = user.username;
  done(null, user.id);
 };
 
@@ -69,13 +70,16 @@ app.use(passport.initialize());
 app.get('/', function(req, res) {
  Code.find().then(function(code, user) {
   res.render('home', {
-   code: code
+   code: code,
+   user: req.session.user
   });
  });
 });
 
 app.get('/add', function(req, res) {
- res.render('add');
+ res.render('add', {
+   user: req.session.user
+ });
 });
 
 app.post('/add', function(req, res) {
@@ -103,6 +107,39 @@ app.post('/register', function(req, res) {
  });
 });
 
+// search by tags
+app.get('/tags/:tags', function(req, res) {
+ Code.find({
+  tags: req.params.tags
+ }).then(function(code) {
+  res.render('tags', {
+   code: code
+  });
+ });
+});
+
+// search by author
+app.get('/author/:author', function(req, res) {
+ Code.find({
+  author: req.params.author
+ }).then(function(code) {
+  res.render('author', {
+   code: code
+  });
+ });
+});
+
+// search by language
+app.get('/language/:language', function(req, res) {
+ Code.find({
+  language: req.params.language
+ }).then(function(code) {
+  res.render('language', {
+   code: code
+  });
+ });
+});
+
 app.get('/:id', function(req, res) {
  Code.find({
   _id: req.params.id
@@ -122,24 +159,13 @@ app.post('/:id', function(req, res) {
  });
 });
 
-
-// search by tags <-- problem child
-app.get('/:language', function(req, res) {
- Code.find({
-  language: req.params.language
- }).then(function(code) {
-  res.render('language', {
-   code: code
-  });
- });
-});
-
 app.get('/:id/edit', function(req, res) {
  Code.find({
   _id: req.params.id
  }).then(function(code) {
   res.render('edit', {
-   code: code
+   code: code,
+   user: req.session.user
   });
  });
 });

@@ -1,3 +1,8 @@
+* {
+ font-family: Helvetica, sans-serif;
+ text-decoration: none;
+}
+
 .codeContainer {
  display: flex;
  flex-direction: row;
