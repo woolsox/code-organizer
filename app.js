@@ -10,7 +10,7 @@ const fs = require('fs'),
  mongoose = require('mongoose'),
  expressValidator = require('express-validator'),
  port = 3000,
- codeOrganizer = 'mongodb://localhost:27017/codeOrganizer'
+ codeOrganizer = 'mongodb://localhost:27017/codeOrganizer',
  codeModels = require('./models/code'),
  userModels = require('./models/user'),
  User = userModels.User,
@@ -42,7 +42,7 @@ var authStrategy = new PassportLocalStrategy({
  });
 });
 
-var authSerializer = function(user, done) {
+var authSerializer = function(req, user, done) {
  done(null, user.id);
 };
 
@@ -52,12 +52,37 @@ var authDeserializer = function(id, done) {
  });
 };
 
+app.use(session({
+ secret: 'wool socks',
+ resave: false,
+ saveUninitialized: false,
+}));
+
 passport.use(authStrategy);
 passport.serializeUser(authSerializer);
 passport.deserializeUser(authDeserializer);
 
 app.use(require('connect-flash')());
 app.use(passport.initialize());
+
+
+app.get('/', function(req, res) {
+ Code.find().then(function(code, user) {
+  res.render('home', {
+   code: code
+  });
+ });
+});
+
+app.get('/add', function(req, res) {
+ res.render('add');
+});
+
+app.post('/add', function(req, res) {
+ Code.create(req.body).then(function(code) {
+  res.redirect('/');
+ });
+});
 
 app.get('/login', function(req, res) {
  res.render('login');
@@ -75,34 +100,6 @@ app.get('/register', function(req, res) {
 app.post('/register', function(req, res) {
  User.create(req.body).then(function(user) {
   res.redirect('/');
- });
-});
-
-app.get('/add', function(req, res) {
- res.render('add');
-});
-
-app.post('/add', function(req, res) {
- Code.create(req.body).then(function(code) {
-  res.redirect('/');
- });
-});
-
-app.get('/:id/edit', function(req, res) {
- Code.find({
-  _id: req.params.id
- }).then(function(code) {
-  res.render('edit', {
-   code: code
-  });
- });
-});
-
-app.post('/:id/edit', function(req, res) {
- Code.findOneAndUpdate({
-  _id: req.params.id
- }, req.body).then(function(code) {
-  res.redirect('/')
  });
 });
 
@@ -125,11 +122,33 @@ app.post('/:id', function(req, res) {
  });
 });
 
-app.get('/', function(req, res) {
- Code.find().then(function(code, user) {
-  res.render('home', {
+
+// search by tags <-- problem child
+app.get('/:language', function(req, res) {
+ Code.find({
+  language: req.params.language
+ }).then(function(code) {
+  res.render('language', {
    code: code
   });
+ });
+});
+
+app.get('/:id/edit', function(req, res) {
+ Code.find({
+  _id: req.params.id
+ }).then(function(code) {
+  res.render('edit', {
+   code: code
+  });
+ });
+});
+
+app.post('/:id/edit', function(req, res) {
+ Code.findOneAndUpdate({
+  _id: req.params.id
+ }, req.body).then(function(code) {
+  res.redirect('/')
  });
 });
 

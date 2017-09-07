@@ -9,13 +9,9 @@
 </head>
 
 <body>
- <h1>Code Snippets:</h1>
- {{#user}}
- <h2>Welcome {{user}}!</h2>
- {{/user}}
- <a href='/login'>Login to your Code Snippets account</a>
- <a href='/register'>Register with Code Snippets</a>
- <a href='/add'>Add a code snippet:</a>
+ {{#code}}
+ <h1>{{language}} Code Snippets:</h1>
+ {{/code}}
  <div class="codeContainer">
   {{#code}}
    <div class="codeSnippets">

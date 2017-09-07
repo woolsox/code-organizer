@@ -17,6 +17,9 @@ const codeSchema = new mongoose.Schema({
  },
  tags: {
   type: String
+ },
+ author: {
+  type: String
  }
 });
 
