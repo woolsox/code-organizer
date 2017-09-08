@@ -9,10 +9,13 @@
 </head>
 
 <body>
- <a href="/">Home</a>
- <h1>Edit this snippet:</h1>
+ <div class="nav">
+   <a href="/">Home</a>  
+ </div>
  {{#code}}
   <form action="/{{_id}}/edit" method="POST">
+  <fieldset>
+  <legend>Edit this snippet:</legend>
    <label for="{{title}}">Title:</label>
    <input type="text" id="{{title}}" name="title" value="{{title}}" />
    <label for="{{body}}">Body:</label>
@@ -26,6 +29,7 @@
    <label for="author">Author:</label>
    <input type="text" id="author" name="author" value="{{user}}" />
    <button type="submit">Edit</button>
+  </fieldset>
   </form>
  {{/code}}
 </body>

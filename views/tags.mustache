@@ -9,10 +9,14 @@
 </head>
 
 <body>
- {{#code.0}}
- <h1>Code Snippets by tag: {{tags}}</h1>
- {{/code.0}}
- <a href="/">Back to snippets</a>
+ <div class="header">
+   {{#code.0}}
+    <h1>Code Snippets by tag: {{tags}}</h1>
+   {{/code.0}}
+ </div>
+ <div class="nav">
+   <a href="/">Home</a>
+ </div>
  <div class="codeContainer">
     {{#code}}
      <div class="codeSnippets">
@@ -21,7 +25,7 @@
        <code>Code: {{body}}</code>
        <h4>Notes: {{notes}}</h4>
        <a href="/language/{{language}}"><h5>Language: {{language}}</h5></a>
-       <a href="/tags/{{tags}}"><h6>Tags: {{tags}}</h6></a>
+       <a href="/tags/{{tags}}"><h5>Tags: {{tags}}</h5></a>
      </div>
     {{/code}}
  </div>

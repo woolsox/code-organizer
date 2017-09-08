@@ -9,7 +9,10 @@
 </head>
 
 <body>
- <a href="/">Back to snippets</a>
+ <div class="nav">
+  <a href="/">Home</a>
+ </div>
+ <div class=codeContainer>
  {{#code}}
   <div class="codeSnippets">
     <a href="{{_id}}"><h2>Title: {{title}}</h2></a>
@@ -17,17 +20,20 @@
     <code>Code: {{body}}</code>
     <h4>Notes: {{notes}}</h4>
     <a href="/language/{{language}}"><h5>Language: {{language}}</h5></a>
-    <a href="/tags/{{tags}}"><h6>Tags: {{tags}}</h6></a>
+    <a href="/tags/{{tags}}"><h5>Tags: {{tags}}</h5></a>
   </div>
  {{/code}}
- {{#code}}
-  <a href="{{_id}}/edit">Edit this snippet</a>
- {{/code}}
- {{#code}}
-  <form action="/{{_id}}" method="POST">
-    <button type=submit>Delete this snippet</button>
-  </form>
- {{/code}}
+   </div>
+   <div class="options">
+   {{#code}}
+      <a href="{{_id}}/edit">Edit this snippet</a>
+   {{/code}}
+   {{#code}}
+    <form action="/{{_id}}" method="POST">
+      <button type=submit>Delete this snippet</button>
+    </form>
+   {{/code}}
+ </div>
 </body>
 
 </html>

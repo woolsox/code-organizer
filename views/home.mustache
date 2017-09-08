@@ -9,13 +9,17 @@
 </head>
 
 <body>
- <h1>Code Snippets:</h1>
- {{#user}}
- <h2>Welcome {{user}}!</h2>
- {{/user}}
- <a href='/login'>Login to your Code Snippets account</a>
- <a href='/register'>Register with Code Snippets</a>
- <a href='/add'>Add a code snippet:</a>
+  <div class="header">
+    <h1>CODE SNIPPETS:</h1>
+    {{#user}}
+      <h2>Welcome {{user}}!</h2>
+    {{/user}}
+  </div>
+ <div class="nav">
+   <a href='/login'>Login</a>
+   <a href='/register'>Register</a>
+   <a href='/add'>Add a snippet</a>
+ </div>
  <div class="codeContainer">
   {{#code}}
    <div class="codeSnippets">
@@ -24,9 +28,9 @@
      <code>Code: {{body}}</code>
      <h4>Notes: {{notes}}</h4>
      <a href="/language/{{language}}"><h5>Language: {{language}}</h5></a>
-     <a href="/tags/{{tags}}"><h6>Tags: {{tags}}</h6></a>
-   </div>
-  {{/code}}
+     <a href="/tags/{{tags}}"><h5>Tags: {{tags}}</h5></a>
+ </div>
+ {{/code}}
  </div>
 </body>
 

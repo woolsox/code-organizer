@@ -54,7 +54,7 @@ var authDeserializer = function(id, done) {
 };
 
 app.use(session({
- secret: 'wool socks',
+ secret: 'woolsox',
  resave: false,
  saveUninitialized: false,
 }));
@@ -74,11 +74,12 @@ app.get('/', function(req, res) {
    user: req.session.user
   });
  });
+ console.log(req.session.user);
 });
 
 app.get('/add', function(req, res) {
  res.render('add', {
-   user: req.session.user
+  user: req.session.user
  });
 });
 
@@ -163,10 +164,14 @@ app.get('/:id/edit', function(req, res) {
  Code.find({
   _id: req.params.id
  }).then(function(code) {
-  res.render('edit', {
-   code: code,
-   user: req.session.user
-  });
+  if (req.session.user === undefined) {
+   res.redirect('/')
+ } else {
+   res.render('edit', {
+    code: code,
+    user: req.session.user
+   });
+ }
  });
 });
 
